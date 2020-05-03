@@ -41,6 +41,8 @@ public class SpiderController : MonoBehaviour {
 
         Vector3 dirTowardTargetObject = targetBody.transform.position - transform.position;
 
+        Debug.Log(dirTowardTargetObject);
+
         if (dirTowardTargetObject.sqrMagnitude <= sqrMaxDistanceFromTarget) {
             state = State.IDLE;
             currentSpeedModifier = 0;
@@ -57,11 +59,17 @@ public class SpiderController : MonoBehaviour {
             transform.position += (dirTowardTargetObject * speed * Time.deltaTime);
         }
 
-        animator.SetFloat("Speed", currentSpeedModifier);
+        animator.SetFloat("VelocityZ", currentSpeedModifier);
 
         Vector3 rotation = dirTowardTargetObject;
         rotation.y = 0;
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotation), maxRotationSpeed * Time.deltaTime);
+        Quaternion lRotation = Quaternion.LookRotation(rotation);
+
+        float angle = Quaternion.Angle(transform.rotation, lRotation);
+
+        animator.SetFloat("VelocityX", maxRotationSpeed * Time.deltaTime);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, lRotation, maxRotationSpeed * Time.deltaTime);
     }
 }

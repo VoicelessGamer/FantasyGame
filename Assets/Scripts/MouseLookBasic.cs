@@ -7,7 +7,7 @@ public class MouseLookBasic : MonoBehaviour {
     private float xRotation = 0;
 
     private void Start() {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update() {
